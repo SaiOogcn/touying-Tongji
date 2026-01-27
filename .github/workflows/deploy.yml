@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Clone fonts repository
-        run: git clone https://github.com/tzhTaylor/touying-sjtu-fonts.git --depth=1
+        run: git clone https://github.com/tzhtaylor/touying-sjtu-fonts.git --depth=1
 
       - name: Set up Python
         uses: actions/setup-python@v5
