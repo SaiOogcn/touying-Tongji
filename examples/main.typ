@@ -12,17 +12,16 @@
   footer: self => self.info.institution,
   navigation: "mini-slides",
   config-info(
-    title: [Typst Slide Theme for SJTU Based on Touying],
-    subtitle: [基于 Touying 的上海交通大学 Typst 幻灯片模板],
-    author: [SJTUG],
+    title: [Touying-LZU],
+    subtitle: [基于 Touying 的兰州大学 Typst 幻灯片模板],
+    author: [nftuoa],
     date: datetime.today(),
-    institution: [上海交通大学],
+    institution: [兰州大学信息科学与工程学院],
   ),
 )
 
 #title-slide()
 
-#title-slide-red()
 
 #outline-slide()
 
@@ -245,8 +244,3 @@ Touying 社区正在探索与更多 Typst 包的集成，详细情况可查阅#l
   Thanks for Listening!
 ]
 
-#end-slide-red[
-  感谢聆听
-
-  Thanks for Listening!
-]
