@@ -709,7 +709,7 @@
 /// - outline-title (content, function): The title of the outline. Default is `utils.i18n-outline-title`.
 ///
 /// - subslide-preamble (content, function): The preamble of the subslide. Default is `self => block(text(1.2em, weight: "bold", fill: self.colors.primary, utils.display-current-heading(depth: self.slide-level)))`.
-#let sjtu-theme(
+#let lzu-theme(
   aspect-ratio: "16-9",
   navigation: "mini-slides",
   font: ("Libertinus Serif", "Noto Serif CJK SC"),

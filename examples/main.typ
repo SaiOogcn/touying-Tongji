@@ -7,7 +7,7 @@
 #let fletcher-diagram = touying-reducer.with(reduce: fletcher.diagram, cover: fletcher.hide)
 
 #set text(lang: "zh")
-#show: sjtu-theme.with(
+#show: lzu-theme.with(
   aspect-ratio: "16-9",
   footer: self => self.info.institution,
   navigation: "mini-slides",
