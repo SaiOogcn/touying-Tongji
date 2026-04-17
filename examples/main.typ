@@ -5,7 +5,7 @@
 
 #let cetz-canvas = touying-reducer.with(reduce: cetz.canvas, cover: cetz.draw.hide.with(bounds: true))
 #let fletcher-diagram = touying-reducer.with(reduce: fletcher.diagram, cover: fletcher.hide)
-#let deck-mode = "dark"
+#let deck-mode = "light"
 #let cetz-stroke = if deck-mode == "dark" {
   rgb("#E2E2E6")
 } else {
@@ -28,7 +28,7 @@
     subtitle: [基于 Touying 的同济大学 Typst 幻灯片模板],
     author: [SaiOog],
     date: datetime.today(),
-    institution: [同济大学电子信息与工程学院],
+    institution: [同济大学电子与信息工程学院],
   ),
 )
 
