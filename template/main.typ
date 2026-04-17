@@ -1,13 +1,18 @@
 #import "@preview/touying:0.6.1": *
 #import "../lib.typ": *
 
-#show: lzu-theme.with(config-info(
-  title: [Touying for LZU: Customize Your Slide Title Here],
-  subtitle: [Customize Your Slide Subtitle Here],
-  author: [LZUOSS],
-  date: datetime.today(),
-  institution: [Lanzhou University],
-))
+#let deck-mode = "dark"
+
+#show: tongji-theme.with(
+  color-mode: deck-mode,
+  config-info(
+    title: [Touying for tongji: Customize Your Slide Title Here],
+    subtitle: [Customize Your Slide Subtitle Here],
+    author: [SaiOog],
+    date: datetime.today(),
+    institution: [Tongji University],
+  ),
+)
 
 #title-slide()
 

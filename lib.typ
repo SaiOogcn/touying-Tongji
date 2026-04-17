@@ -287,15 +287,18 @@
   ..args,
 ) = touying-slide-wrapper(self => {
   self = utils.merge-dicts(self, config, config-common(freeze-slide-counter: true), config-page(
-    header: align(right + horizon, block(inset: (right: 0.3em, top: 0.3em), image("vi/lzu-vi-logo.png"))),
+    header: align(right + horizon, block(inset: (right: 0.7em, top: 0.9em), image(if self.store.color-mode == "dark" {
+      "vi/tongji-vi-logo-fordark.svg"
+    } else {
+      "vi/tongji-vi-logo.svg"
+    }, height: 1.3cm))),
     margin: (top: 3.5em, bottom: 1.5em, x: 2em),
   ))
   let info = self.info + args.named()
   let body = {
     set par(leading: 1.6em)
     set align(center + horizon)
-    set page(background: align(left + bottom, image("vi/lzu-bg.png", width: if self.show-notes-on-second-screen
-      == right { 50% } else { 100% })))
+    set page(fill: self.store.surface)
     block(width: 100%, inset: 3em, {
       v(0.2fr)
       block(
@@ -356,7 +359,7 @@
   let body = {
     set par(leading: 1.6em)
     set align(left + bottom)
-    set page(background: align(left, image("vi/lzu-bg.jpg")))
+    set page(fill: self.store.surface)
     line(length: 100%, stroke: (paint: self.colors.neutral-light, thickness: 1.5pt))
     v(-1.15em)
     block(fill: self.colors.primary, width: 100%, {
@@ -396,7 +399,11 @@
           }
           v(0.5em)
         }),
-        align(right, block(inset: (x: 2em), image("vi/lzu-vi-logo-white.png"))),
+        align(right, block(inset: (x: 2em), image(if self.store.color-mode == "dark" {
+          "vi/tongji-vi-logo-fordark.svg"
+        } else {
+          "vi/tongji-vi-logo.svg"
+        }))),
       )
       v(2em)
     })
@@ -632,12 +639,15 @@
   )
   set text(fill: self.colors.primary, size: 1.65em, weight: "bold")
   let body = {
-    set page(background: align(left + bottom, image("vi/lzu-bg.png", width: if self.show-notes-on-second-screen
-      == right { 50% } else { 100% })))
+    set page(fill: self.store.surface)
     block(width: 80%, grid(
       columns: (40%, 1fr),
       column-gutter: 0pt,
-      image("vi/lzu-vi-logo-ud.svg"), body,
+      image(if self.store.color-mode == "dark" {
+        "vi/tongji-vi-logo-fordark.svg"
+      } else {
+        "vi/tongji-vi-logo.svg"
+      }, width: 100%), body,
     ))
   }
   touying-slide(self: self, config: config, align(horizon + center, body))
@@ -651,7 +661,7 @@
   ))
   set text(fill: self.colors.primary, size: 1.75em, weight: "bold")
   let body = {
-    set page(background: align(left, image("vi/sjtu-vi-end.png")))
+    set page(fill: self.store.surface)
     v(1fr)
     body
     v(1.25fr)
@@ -730,7 +740,12 @@
   ),
   footer: none,
   footer-right: context utils.slide-counter.display() + " / " + utils.last-slide-number,
-  primary: rgb("#25506bff"), //#A51F38
+  color-mode: "light",
+  primary: rgb("#006097"),
+  secondary: rgb("#3d7398"),
+  tertiary: rgb("#2c93b8"),
+  quaternary: rgb("#5b8fc5"),
+  quinary: rgb("#7aaed8"),
   alpha: 40%,
   subslide-preamble: none,
   ..args,
@@ -750,22 +765,61 @@
   set cite(style: "chicago-notes")
   show footnote.entry: set text(.8em)
 
+  let tonal = if color-mode == "dark" {
+    (
+      // dark mode mapping (Monet-style)
+      neutral-darkest: rgb("#E2E2E6"),
+      neutral-dark: rgb("#C1C7CE"),
+      neutral-light: rgb("#1A1C1E"),
+      neutral-lightest: rgb("#0A0E14"),
+      primary: rgb("#8BCCFF"),
+      secondary: rgb("#6FAFD8"),
+      tertiary: rgb("#62C3D1"),
+      quaternary: rgb("#89AEE4"),
+      quinary: rgb("#A5C8EF"),
+      surface: rgb("#0c141f"),
+      container: rgb("#1A1C1E"),
+      on-surface: rgb("#E2E2E6"),
+    )
+  } else {
+    (
+      // light mode mapping (Monet-style)
+      neutral-darkest: rgb("#001C3B"),
+      neutral-dark: rgb("#414753"),
+      neutral-light: rgb("#E7EBF2"),
+      neutral-lightest: rgb("#F8F9FF"),
+      primary: primary,
+      secondary: secondary,
+      tertiary: tertiary,
+      quaternary: quaternary,
+      quinary: quinary,
+      surface: rgb("#c1cfe57c"),
+      container: rgb("#E7EBF2"),
+      on-surface: rgb("#001C3B"),
+    )
+  }
+
   show: touying-slides.with(
-    config-page(paper: "presentation-" + aspect-ratio, header-ascent: 1.5em, footer-descent: 0em, margin: if navigation
-      == "sidebar" {
-      (top: 2em, bottom: 1em, x: sidebar.width)
-    } else if navigation == "mini-slides" {
-      (top: if mini-slides.linebreaks { mini-slides.height } else { 6em }, bottom: 3em, x: mini-slides.x)
-    } else {
-      (top: 5em, bottom: 2em, x: mini-slides.x)
-    }),
+    config-page(
+      paper: "presentation-" + aspect-ratio,
+      header-ascent: 1.5em,
+      footer-descent: 0em,
+      fill: tonal.surface,
+      margin: if navigation == "sidebar" {
+        (top: 2em, bottom: 1em, x: sidebar.width)
+      } else if navigation == "mini-slides" {
+        (top: if mini-slides.linebreaks { mini-slides.height } else { 6em }, bottom: 3em, x: mini-slides.x)
+      } else {
+        (top: 5em, bottom: 2em, x: mini-slides.x)
+      },
+    ),
     config-common(
       slide-fn: slide,
       new-section-slide-fn: new-section-slide,
     ),
     config-methods(
       init: (self: none, body) => {
-        set text(font: font)
+        set text(font: font, fill: tonal.on-surface)
         show heading: set text(self.colors.primary)
         show outline.entry: set block(above: 1em)
 
@@ -774,11 +828,11 @@
       alert: utils.alert-with-primary-color,
     ),
     config-colors(
-      neutral-darkest: rgb("#000000"),
-      neutral-dark: rgb("#202020"),
-      neutral-light: rgb("#f3f3f3"),
-      neutral-lightest: rgb("#ffffff"),
-      primary: primary,
+      neutral-darkest: tonal.neutral-darkest,
+      neutral-dark: tonal.neutral-dark,
+      neutral-light: tonal.neutral-light,
+      neutral-lightest: tonal.neutral-lightest,
+      primary: tonal.primary,
     ),
     // save the variables for later use
     config-store(
@@ -788,6 +842,14 @@
       footer: footer,
       footer-right: footer-right,
       alpha: alpha,
+      color-mode: color-mode,
+      secondary: tonal.secondary,
+      tertiary: tonal.tertiary,
+      quaternary: tonal.quaternary,
+      quinary: tonal.quinary,
+      surface: tonal.surface,
+      container: tonal.container,
+      on-surface: tonal.on-surface,
       subslide-preamble: subslide-preamble,
     ),
     ..args,
@@ -795,3 +857,6 @@
 
   body
 }
+
+// 字研这一块
+#let tongji-theme = lzu-theme
